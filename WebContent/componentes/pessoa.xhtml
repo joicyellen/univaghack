@@ -1,0 +1,170 @@
+<ui:component xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:totem="http://www.totemti.com.br/componentes"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<s:div rendered="#{rendered eq null ? true : rendered}">
+		<h:panelGrid columns="2" styleClass="table table-hover"
+			columnClasses="tdtexto,tdcampo">
+
+			<h:outputLabel value="#{messages['cliente.nome']}" />
+			<h:inputText value="#{cliente.pessoa.nome}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{cliente.pessoa.nome}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.nome']}" />
+			<h:inputText value="#{bean.nome}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.nome}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.razao']}" />
+			<h:inputText value="#{bean.razaoSocial}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.razaoSocial}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.cpf']}" />
+			<p:inputMask value="#{bean.cpf}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.cpf}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.cnpj']}" />
+			<p:inputMask value="#{bean.cnpj}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.cnpj}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.cep']}" />
+			<p:inputMask value="#{bean.cep}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.cep}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.rua']}" />
+			<h:inputText value="#{bean.rua}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.rua}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.numero']}" />
+			<p:inputMask value="#{bean.numero}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.numero}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.bairro']}" />
+			<h:inputText value="#{bean.bairro}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.bairro}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.cidade']}" />
+			<h:inputText value="#{bean.cidade}" styleClass="form-control"
+				rendered="#{edicao}" />
+			<h:outputText value="#{bean.cidade}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.estado']}" />
+			<h:selectOneMenu value="#{bean.estado}"
+				styleClass="btn btn-default btn-sm dropdown-toggle txt-left"
+				rendered="#{edicao}" required="true">
+				<s:selectItems value="#{estados}" var="_estado"
+					label="#{_estado.uf}" noSelectionLabel="Selecione..." />
+				<s:convertEnum />
+			</h:selectOneMenu>
+			<h:outputText value="#{bean.estado.descricao}"
+				rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.complemento']}" />
+			<h:inputTextarea value="#{bean.complemento}"
+				styleClass="form-control" rendered="#{edicao}" />
+			<h:outputText value="#{bean.complemento}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['pessoa.email']}" />
+			<s:div rendered="#{edicao}" id="divEditarMail">
+				<table>
+					<tr>
+						<td><h:inputText id="idEmail" value="#{bean.emailTransient}"
+								styleClass="form-control" /></td>
+						<td><p:commandButton action="#{bean.addEmailLista()}"
+								icon="ui-icon-plus" process="@parent"
+								update="@this, divEditarMail, idEmail" onstart="loadingModal();"
+								onsuccess="backModal();" onerror="backModal();" /></td>
+					</tr>
+					<a4j:repeat var="item" value="#{bean.listaEmail}">
+						<tr>
+							<td><h:outputText value="#{item}" /></td>
+							<td><p:commandButton
+									action="#{bean.removerEmailLista(item)}"
+									icon="ui-icon-minusthick" process="@parent"
+									update="@this, divEditarMail, idEmail"
+									onstart="loadingModal();" onsuccess="backModal();"
+									onerror="backModal();" /></td>
+						</tr>
+					</a4j:repeat>
+
+				</table>
+			</s:div>
+			<s:div rendered="#{not edicao}">
+				<table>
+					<ui:repeat var="mail" value="#{bean.listaEmail}">
+						<tr>
+							<td><h:outputText value="#{mail}" /></td>
+						</tr>
+					</ui:repeat>
+				</table>
+			</s:div>
+
+			<h:outputLabel value="#{messages['geral.boleto.via.email']}"
+				rendered="#{view.viewId eq '/pages/cliente/clienteAlterar.xhtml' or view.viewId eq '/pages/cliente/clienteIncluir.xhtml'}" />
+			<p:selectOneRadio id="radio-email" value="#{bean.boletoAutomatico}"
+				rendered="#{edicao and view.viewId eq '/pages/cliente/clienteAlterar.xhtml' or view.viewId eq '/pages/cliente/clienteIncluir.xhtml'}">
+				<f:selectItems value="#{simNao}" />
+			</p:selectOneRadio>
+
+			<s:div
+				rendered="#{view.viewId eq '/pages/cliente/clienteAlterar.xhtml' and not edicao}">
+				<p:selectOneRadio value="#{bean.boletoAutomatico}" disabled="true">
+					<f:selectItems value="#{simNao}" />
+				</p:selectOneRadio>
+			</s:div>
+
+			<h:outputLabel value="#{messages['pessoa.telefone']}" />
+			<s:div rendered="#{edicao}" id="divEditarTelefone">
+				<table>
+					<tr>
+						<td><p:inputMask id="idTelefone"
+								value="#{bean.telefoneTransient}" styleClass="form-control"
+								required="#{bean.listaTelefone == null}" /></td>
+						<td><p:commandButton action="#{bean.addTelefoneLista()}"
+								icon="ui-icon-plus" process="@parent"
+								update="@this, idTelefone, divEditarTelefone"
+								onstart="loadingModal();" onsuccess="backModal();"
+								onerror="backModal();" /></td>
+					</tr>
+					<a4j:repeat var="item" value="#{bean.listaTelefone}">
+						<tr>
+							<td><h:outputText value="#{item}" /></td>
+							<td><p:commandButton
+									action="#{bean.removerTelefoneLista(item)}"
+									icon="ui-icon-minusthick" process="@parent"
+									update="@this, idTelefone, divEditarTelefone"
+									onstart="loadingModal();" onsuccess="backModal();"
+									onerror="backModal();" /></td>
+						</tr>
+					</a4j:repeat>
+
+				</table>
+			</s:div>
+			<s:div rendered="#{not edicao}">
+				<table>
+					<ui:repeat var="mail" value="#{bean.listaTelefone}">
+						<tr>
+							<td><h:outputText value="#{mail}" /></td>
+						</tr>
+					</ui:repeat>
+				</table>
+			</s:div>
+
+		</h:panelGrid>
+	</s:div>
+</ui:component>

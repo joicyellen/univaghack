@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema">
+	<datasource jndi-name="gerenciaDatasource" enabled="true" use-java-context="true" pool-name="gerenciaDatasource_pool">
+		<connection-url>jdbc:mysql://localhost:3306/univaghack</connection-url>
+		<driver>mysql-connector-java-5.1.29.jar</driver>
+		<security>
+			<user-name>root</user-name>
+			<password>root</password>
+		</security>
+		<pool>
+			<min-pool-size>2</min-pool-size>
+			<max-pool-size>4</max-pool-size>
+			<prefill>true</prefill>
+		</pool>
+	</datasource>
+</datasources>

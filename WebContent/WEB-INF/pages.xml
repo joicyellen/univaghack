@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages login-view-id="/login.xhtml" no-conversation-view-id="/login.xhtml"
+	xmlns="http://jboss.org/schema/seam/pages" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.org/schema/seam/pages http://jboss.org/schema/seam/pages-2.3.xsd">
+	<page view-id="*">
+	
+		<navigation from-action="#{identity.login()}">
+			<rule if="#{identity.loggedIn}">
+				<redirect view-id="/pages/home.xhtml" />
+			</rule>
+		</navigation>
+		<navigation from-action="#{identity.logout()}">
+			<rule if="#{!identity.loggedIn}">
+				<redirect view-id="/login.xhtml" />
+			</rule>
+		</navigation>
+		<navigation>
+
+			<!-- EXEMPLO -->
+			<rule if-outcome="professor.manter">
+<!-- 				<end-conversation before-redirect="true" root="true" /> -->
+				<redirect view-id="/pages/professor/professorManter.xhtml" />
+			</rule>
+			
+			<rule if-outcome="professor.cadastrar">
+				<end-conversation before-redirect="true" root="true" />
+				<redirect view-id="/pages/professor/professorCadastrar.xhtml" />
+			</rule>
+			
+			<rule if-outcome="professor.alterar">
+				<redirect view-id="/pages/professor/professorAlterar.xhtml" />
+			</rule>
+
+			<rule if-outcome="ponto.registrarBatida">
+				<end-conversation before-redirect="true" root="true" />
+				<redirect view-id="/pages/ponto/registrarBatida.xhtml" />
+			</rule>
+
+			<rule if-outcome="ponto.aprovarBatida">
+				<end-conversation before-redirect="true" root="true" />
+				<redirect view-id="/pages/ponto/aprovarBatida.xhtml" />
+			</rule>
+
+			<rule if-outcome="ponto.justificarFalta">
+				<end-conversation before-redirect="true" root="true" />
+				<redirect view-id="/pages/ponto/justificarFalta.xhtml" />
+			</rule>
+
+			<rule if-outcome="relatorio.relatorioFrequencia">
+				<end-conversation before-redirect="true" root="true" />
+				<redirect view-id="/pages/relatorio/relatorioFrequencia.xhtml" />
+			</rule>
+
+			<rule if-outcome="relatorio.relatorioAciduidade">
+				<end-conversation before-redirect="true" root="true" />
+				<redirect view-id="/pages/relatorio/relatorioAciduidade.xhtml" />
+			</rule>
+
+			<rule if-outcome="home">
+				<end-conversation before-redirect="true" root="true" />
+				<redirect view-id="/pages/home.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+	<page login-required="true" view-id="/pages/*" />
+	<page login-required="true" view-id="/resources/*" />
+	<page login-required="true" view-id="/layout/*" />
+	<page login-required="true" view-id="/componentes/*" />
+	<exception class="org.jboss.seam.framework.EntityNotFoundException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Record not found</message>
+		</redirect>
+	</exception>
+	<exception class="javax.persistence.EntityNotFoundException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Record not found</message>
+		</redirect>
+	</exception>
+	<exception class="javax.persistence.EntityExistsException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Duplicate record</message>
+		</redirect>
+	</exception>
+	<exception class="javax.persistence.OptimisticLockException">
+		<end-conversation />
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Another user changed the same data, please try again</message>
+		</redirect>
+	</exception>
+	<exception class="org.jboss.seam.security.AuthorizationException">
+		<redirect view-id="/error.xhtml">
+			<message severity="error">You don't have permission to access this resource</message>
+		</redirect>
+	</exception>
+	<exception class="org.jboss.seam.security.NotLoggedInException">
+		<redirect view-id="/login.xhtml">
+			<message severity="warn">#{messages['org.jboss.seam.NotLoggedIn']}</message>
+		</redirect>
+	</exception>
+	<exception class="javax.faces.application.ViewExpiredException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Your session has timed out, please try again</message>
+		</redirect>
+	</exception>
+	<exception class="org.jboss.seam.ConcurrentRequestTimeoutException"
+		log-level="trace">
+		<http-error error-code="503" />
+	</exception>
+	<exception>
+		<redirect view-id="/error.xhtml">
+			<message severity="error">Unexpected error, please try again</message>
+		</redirect>
+	</exception>
+</pages>

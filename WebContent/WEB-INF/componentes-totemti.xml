@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE facelet-taglib PUBLIC "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+                                "facelet-taglib_1_0.dtd">
+<facelet-taglib>
+	<namespace>http://www.totemti.com.br/componentes</namespace>
+	
+	<tag>
+		<tag-name>pessoa</tag-name>
+		<source>../componentes/pessoa.xhtml</source>
+	</tag>
+	
+	<tag>
+		<tag-name>contrato</tag-name>
+		<source>../componentes/contrato.xhtml</source>
+	</tag>
+	
+	<tag>
+		<tag-name>boleto</tag-name>
+		<source>../componentes/boleto.xhtml</source>
+	</tag>
+		
+</facelet-taglib>

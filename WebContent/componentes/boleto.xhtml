@@ -1,0 +1,135 @@
+<ui:component xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:totem="http://www.totemti.com.br/componentes"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<s:div rendered="#{rendered eq null ? true : rendered}">
+		<h:panelGrid columns="2" styleClass="table table-hover"
+			columnClasses="tdtexto,tdcampo">
+			<h:outputLabel value="#{messages['geral.id']}"
+				rendered="#{not empty bean.idContratoBoleto}" />
+			<h:outputText value="#{bean.idContratoBoleto}"
+				rendered="#{not empty bean.idContratoBoleto}" />
+
+			<h:outputLabel value="#{messages['geral.usuario.criacao']}"
+				rendered="#{not empty bean.idContratoBoleto}" />
+			<h:outputText value="#{bean.usuarioCriacao.nomeOuEmail}"
+				rendered="#{not empty bean.idContratoBoleto}" />
+
+			<h:outputLabel value="#{messages['boleto.tipo.boleto']}" />
+			<h:selectOneMenu value="#{bean.tipoBoletoContrato}"
+				styleClass="btn btn-default btn-sm dropdown-toggle txt-left"
+				rendered="#{edicao}">
+				<s:selectItems value="#{listaTipoBoletoContrato}" var="_tipo"
+					label="#{_tipo.descricao}" />
+				<s:convertEntity />
+			</h:selectOneMenu>
+			<h:outputText value="#{bean.tipoBoletoContrato}"
+				rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['boleto.quantidade']}"
+				rendered="#{empty bean.idContratoBoleto}" />
+			<p:spinner value="#{bean.quantidade}" min="1"
+				rendered="#{empty bean.idContratoBoleto and edicao}" size="5" />
+
+
+			<h:outputLabel value="#{messages['boleto.data.emissao']}" />
+			<p:calendar value="#{bean.dataEmissao}" locale="pt"
+				rendered="#{edicao}" pattern="dd/MM/yyyy" mask="true" size="8"
+				requiredMessage="#{messages['campo.obrigatorio.data.emicao']}"
+				required="true" />
+			<h:outputText value="#{bean.dataEmissao}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['boleto.data.vencimento']}" />
+			<p:calendar value="#{bean.dataVencimento}" locale="pt"
+				rendered="#{edicao}" pattern="dd/MM/yyyy" mask="true" size="8"
+				requiredMessage="#{messages['campo.obrigatorio.data.vencimento']}"
+				required="true" />
+			<h:outputText value="#{bean.dataVencimento}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['boleto.situacao']}"
+				rendered="#{not empty bean.idContratoBoleto}" />
+			<h:selectOneMenu value="#{bean.situacaoContratoBoleto}"
+				styleClass="btn btn-default btn-sm dropdown-toggle txt-left"
+				rendered="#{not empty bean.idContratoBoleto and edicao}">
+				<s:selectItems value="#{situacaoContratoBoleto}" var="_situacao"
+					label="#{_situacao}" />
+				<s:convertEnum />
+			</h:selectOneMenu>
+			<h:outputText value="#{bean.situacaoContratoBoleto}"
+				rendered="#{not empty bean.idContratoBoleto and not edicao}" />
+
+			<h:outputLabel value="#{messages['boleto.descricao']}" />
+			<h:inputText value="#{bean.descricao}" styleClass="form-control"
+				rendered="#{edicao}"
+				requiredMessage="#{messages['campo.obrigatorio.descricao']}"
+				required="true" />
+			<h:outputText value="#{bean.descricao}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['boleto.valor']}" />
+			<p:inputText styleClass="dinheiro" maxlength="19" size="15"
+				id="idValorTotal" value="#{bean.valor}"
+				requiredMessage="#{messages['campo.obrigatorio.valor.total']}"
+				required="true">
+				<p:ajax event="keyup" update="out" />
+				<f:converter converterId="converterReal"></f:converter>
+			</p:inputText>
+
+			<h:outputLabel value="#{messages['boleto.desconto']}" />
+			<p:inputText styleClass="dinheiro" maxlength="19" size="15"
+				value="#{bean.desconto}">
+				<p:ajax event="keyup" update="out" />
+				<f:converter converterId="converterReal"></f:converter>
+			</p:inputText>
+
+			<h:outputLabel value="#{messages['boleto.valorTotal']}" />
+			<p:inputText styleClass="dinheiro" maxlength="19" id="out"
+				disabled="true" size="15" value="#{bean.valor-bean.desconto}">
+				<f:converter converterId="converterReal"></f:converter>
+			</p:inputText>
+
+			<h:outputLabel value="#{messages['boleto.btaxa']}" />
+			<h:selectOneMenu value="#{bean.bTaxa}"
+				styleClass="btn btn-default btn-sm dropdown-toggle txt-left"
+				rendered="#{edicao}">
+				<s:selectItems value="#{simNao}" var="_sn" label="#{_sn.descricao}" />
+				<s:convertEnum />
+			</h:selectOneMenu>
+			<h:outputText value="#{bean.bTaxa}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['boleto.contra']}" />
+			<h:selectOneMenu value="#{bean.contra}"
+				styleClass="btn btn-default btn-sm dropdown-toggle txt-left"
+				rendered="#{edicao}">
+				<s:selectItems value="#{simNao}" var="_sn" label="#{_sn.descricao}" />
+				<s:convertEnum />
+			</h:selectOneMenu>
+			<h:outputText value="#{bean.contra}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['boleto.correios']}" />
+			<h:selectOneMenu value="#{bean.correios}"
+				styleClass="btn btn-default btn-sm dropdown-toggle txt-left"
+				rendered="#{edicao}">
+				<s:selectItems value="#{simNao}" var="_sn" label="#{_sn.descricao}" />
+				<s:convertEnum />
+			</h:selectOneMenu>
+			<h:outputText value="#{bean.correios}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['boleto.enviar.para.min']}" />
+			<h:selectOneMenu value="#{bean.emviarParaMin}"
+				styleClass="btn btn-default btn-sm dropdown-toggle txt-left"
+				rendered="#{edicao}">
+				<s:selectItems value="#{simNao}" var="_sn" label="#{_sn.descricao}" />
+				<s:convertEnum />
+			</h:selectOneMenu>
+			<h:outputText value="#{bean.emviarParaMin}" rendered="#{not edicao}" />
+
+		</h:panelGrid>
+	</s:div>
+</ui:component>

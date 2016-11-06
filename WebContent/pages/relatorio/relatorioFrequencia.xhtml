@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:erp="http://java.sun.com/jsf/composite/erp" template="/layout/template.xhtml">
+	<ui:define name="body">
+
+		<b:container>
+			<legend>
+				<h3>
+					<h:outputText value="Relatório" />
+					<small> <h:outputText value="Frequência" /></small>
+				</h3>
+			</legend>
+
+			<h:form id="idFormProfessor">
+
+				<s:div styleClass="navbar navbar-default " style="position: inherit;">
+					<div style="margin-top: 5px; position: relative;">
+						<div style="float: right; position: relative;">
+	
+							<p:panelGrid style="border: none;">
+								<p:commandButton action="#{professorAcao.exibirIncluir}" value="Incluir" icon="ui-icon-plus" process="@parent"
+									styleClass="ui-priority-primary"
+									update="idListaProfessor" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" />
+							</p:panelGrid>
+	
+						</div>
+	
+						<div style="float: left; position: relative;">
+							<h:form>
+								<div class="form-group">
+									<p:inputText placeholder="Pesquisar" size="30">
+										<p:ajax event="keyup" update=":idFormProfessor:idListaProfessor" />
+									</p:inputText>
+								</div>
+							</h:form>
+	
+	
+						</div>
+					</div>
+				</s:div>
+
+
+				<p:dataTable id="idListaProfessor" var="professor" value="#{professorAcao.listaProfessor}"
+					emptyMessage="Nenhum registro encontrado.">
+
+					<p:column headerText="Nome" sortBy="#{professor.pessoa.nomeCompleto}" style="background-color: inherit;">
+						<h:outputText value="#{professor.pessoa.nomeCompleto}" />
+					</p:column>
+
+					<p:column headerText="CPF" style="background-color: inherit;">
+						<h:outputText value="#{professor.pessoa.cpf}" />
+					</p:column>
+
+					<p:column headerText="Email" style="background-color: inherit;">
+						<h:outputText value="#{professor.pessoa.email}" />
+					</p:column>
+					
+					<p:column headerText=" " width="6%" style="background-color: inherit;">
+						<p:commandLink action="#{professorAcao.exibirAlterar(professor)}" update="@form" process="@this">
+							<h:outputText value="Exibir" />
+						</p:commandLink>
+					</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+
+		</b:container>
+	</ui:define>
+</ui:composition>

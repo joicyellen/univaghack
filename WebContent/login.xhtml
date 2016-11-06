@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+<h:head>
+	<title>Univag - Hack </title>
+</h:head>
+<h:body>
+	<h:form id="loginForm"
+		style="margin:0;
+	padding:0;
+	
+	text-align:center;">
+		<p:fieldset
+			style="width: 280px;							
+	margin:0 auto;		
+	margin-top: 200px;	
+	text-align:left;"
+			id="fieldset-login">
+
+			<h:panelGrid columns="1" style="padding: 5px;
+			margin:0 auto;	">
+
+
+				<p:inputText value="#{credentials.username}" placeholder="Usuário"
+					style="margin-top: 10px;" styleClass="txt-login" required=""
+					autofocus="" />
+
+
+				<p:password value="#{credentials.password}" placeholder="Senha"
+					style="margin-top: 5px; margin-bottom: 8px;" styleClass="txt-login"
+					required="" />
+
+				<p:commandButton id="submit" value="Login"
+					action="#{identity.login}" onstart="loadingModal();"
+					onsuccess="backModal();" onerror="backModal();"
+					styleClass="ui-priority-primary"
+					style="width: 75%;
+					height:38px;
+				margin-left: 13%;" />
+
+			</h:panelGrid>
+
+
+		</p:fieldset>
+
+	</h:form>
+
+</h:body>
+
+</html>

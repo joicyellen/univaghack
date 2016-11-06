@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:totem="http://www.totemti.com.br/componentes"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	template="/layout/template-default.xhtml">
+
+	<h:form prependId="false">
+		<s:div rendered="#{tituloH3 eq null ? false : tituloH3}">
+			<legend>
+				<h3>
+					<h:outputText value="Professor" />
+					<small> <h:outputText value="#{subtitle}" /></small>
+				</h3>
+			</legend>
+		</s:div>
+		<s:div id="divTotalProfessor">
+			<table width="#{width}">
+				<tr>
+					<td width="100%" colspan="2"><s:div
+							rendered="#{tituloH4 eq null ? false : tituloH4}">
+							<legend>
+								<h4>
+									<h:outputText value="Professor" />
+									<small> <h:outputText value="#{subtitle}" /></small>
+								</h4>
+							</legend>
+						</s:div></td>
+				</tr>
+				<tr>
+					<td width="100%" colspan="2"><s:div styleClass="div-bloco"
+							rendered="#{!lancamentoAcao.novoProfessor}">
+							<table>
+								<tr>
+									<td><h:outputText value="Empresa" /><span
+										style="color: red;">*</span></td>
+								</tr>
+								<tr>
+									<td><p:selectOneMenu id="idEmpresaFormProfessor"
+											value="#{professorAcao.professor.escola}" required="true"
+											requiredMessage="Escola é obrigatório!">
+											<f:selectItems value="#{comboListaEscola}" var="escola"
+												itemLabel="#{escola.descricao}" itemValue="#{escola}" />
+											<s:convertEntity />
+											<p:ajax event="change" update="@this" process="@this" />
+										</p:selectOneMenu></td>
+								</tr>
+							</table>
+						</s:div></td>
+				</tr>
+				<tr>
+					<td width="50%"><s:div styleClass="div-bloco">
+							<table>
+								<tr>
+									<td><h:outputText value="Pessoa" /><span
+										style="color: red;">*</span></td>
+								</tr>
+								<tr>
+									<td><p:selectOneMenu value="#{professorAcao.professor}" 											requiredMessage="Pessoa é obrigatório!" required="true">
+											<f:selectItems value="#{tipoPessoa}" var="pessoa"
+												itemLabel="#{pessoa.descricao}" itemValue="#{pessoa}" />
+											<p:ajax event="change" update="@this, divTotalProfessor"
+												process="@this" />
+										</p:selectOneMenu></td>
+								</tr>
+							</table>
+						</s:div></td>
+					<td width="50%"><s:div styleClass="div-bloco">
+							<s:div id="divCnpjCpfFormProfessor">
+								<table>
+									<tr>
+										<td><h:outputText value="CNPJ"
+												rendered="#{professorAcao.tipoPessoa eq 'PJ'}" /> <h:outputText
+												value="CPF" rendered="#{professorAcao.tipoPessoa eq 'PF'}" /></td>
+									</tr>
+									<tr>
+										<td><totem:campoCnpj id="idProfessorCnpjFormProfessor"
+												value="#{professorAcao.pessoaJuridica.cnpj}"
+												rendered="#{professorAcao.tipoPessoa eq 'PJ'}"
+												size="#{sizeInputPequeno}" /> <totem:campoCpf
+												id="idProfessorCPFFormProfessor"
+												value="#{professorAcao.pessoaFisica.cpf}"
+												rendered="#{professorAcao.tipoPessoa eq 'PF'}"
+												size="#{sizeInputPequeno}" /></td>
+									</tr>
+								</table>
+							</s:div>
+						</s:div></td>
+				</tr>
+				<tr>
+					<td width="100%" colspan="2"><s:div styleClass="div-bloco">
+							<s:div id="divNomesPessoaFormProfessor">
+								<table>
+									<tr>
+										<td><h:outputText value="Nome Fantasia"
+												rendered="#{professorAcao.tipoPessoa eq 'PJ'}" /> <h:outputText
+												value="Nome" rendered="#{professorAcao.tipoPessoa eq 'PF'}" /><span
+											style="color: red;">*</span></td>
+									</tr>
+									<tr>
+										<td><p:inputText
+												value="#{professorAcao.pessoaJuridica.nomeFantasia}"
+												rendered="#{professorAcao.tipoPessoa eq 'PJ'}" required="true"
+												size="#{sizeInputGrande}" /> <p:inputText
+												value="#{professorAcao.pessoaFisica.nome}"
+												rendered="#{professorAcao.tipoPessoa eq 'PF'}" required="true"
+												size="#{sizeInputGrande}" /></td>
+									</tr>
+								</table>
+							</s:div>
+						</s:div></td>
+				</tr>
+			</table>
+
+			<s:div id="divDemaisCamposFormProfessor">
+				<p:panelGrid columns="2">
+					<p:commandLink action="#{professorAcao.acaoVerCamposOpcionais}"
+						process="@this" update="divDemaisCamposFormProfessor"
+						styleClass="ui-icon  ui-icon-triangle-1-s"
+						rendered="#{!professorAcao.verCamposOpcionais}"
+						onstart="loadingModal();" onsuccess="backModal();"
+						onerror="backModal(); reload();">
+					</p:commandLink>
+
+					<p:commandLink action="#{professorAcao.acaoVerCamposOpcionais}"
+						process="@this" update="divDemaisCamposFormProfessor"
+						styleClass="ui-icon   ui-icon-triangle-1-n"
+						rendered="#{professorAcao.verCamposOpcionais}"
+						onstart="loadingModal();" onsuccess="backModal();"
+						onerror="backModal(); reload();">
+					</p:commandLink>
+					<h:outputText value="Campos Opcionais" />
+				</p:panelGrid>
+
+				<s:div id="divDemaisCamposPJFormProfessor"
+					rendered="#{professorAcao.tipoPessoa eq 'PJ' and professorAcao.verCamposOpcionais}">
+					<table width="#{width}">
+						<tr>
+							<td width="100%" colspan="2"><s:div styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="Razão Social" /></td>
+										</tr>
+										<tr>
+											<td><p:inputText
+													value="#{professorAcao.pessoaJuridica.razaoSocial}"
+													size="#{sizeInputGrande}" /></td>
+										</tr>
+									</table>
+								</s:div></td>
+						</tr>
+						<tr>
+							<td width="50%"><s:div styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="Inscrição Estadual" /></td>
+										</tr>
+										<tr>
+											<td><p:inputText
+													value="#{professorAcao.pessoaJuridica.inscricaoEstadual}"
+													size="#{sizeInputPequeno}" /></td>
+										</tr>
+									</table>
+								</s:div></td>
+							<td width="50%"><s:div styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="Isento" /></td>
+										</tr>
+										<tr>
+											<td><p:selectBooleanCheckbox
+													value="#{professorAcao.pessoaJuridica.isentoInscricaoEstadual}" /></td>
+										</tr>
+									</table>
+								</s:div></td>
+						</tr>
+					</table>
+				</s:div>
+
+				<s:div id="divDemaisCamposPFFormProfessor"
+					rendered="#{professorAcao.tipoPessoa eq 'PF' and professorAcao.verCamposOpcionais}">
+					<table width="#{width}">
+						<tr>
+							<td width="50%"><s:div styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="RG" /></td>
+										</tr>
+										<tr>
+											<td><p:inputText
+													value="#{professorAcao.pessoaFisica.registroGeral}"
+													size="#{sizeInputPequeno}" /></td>
+										</tr>
+									</table>
+								</s:div></td>
+							<td width="50%"><s:div styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="Data Nascimento" /></td>
+										</tr>
+										<tr>
+											<td><p:calendar
+													value="#{professorAcao.pessoaFisica.dataNascimento}"
+													locale="pt" pattern="dd/MM/yyyy" styleClass="mascaradata"
+													size="#{sizeInputPequeno}">
+													<p:ajax event="dateSelect" update="@this" process="@this" />
+												</p:calendar></td>
+										</tr>
+									</table>
+								</s:div></td>
+						</tr>
+					</table>
+				</s:div>
+			</s:div>
+
+
+			<s:div id="divExibirCamposContatoFormProfessor">
+				<p:panelGrid columns="2">
+					<p:commandLink action="#{professorAcao.acaoVerContato}"
+						process="@this" update="divExibirCamposContatoFormProfessor"
+						styleClass="ui-icon  ui-icon-triangle-1-s"
+						rendered="#{!professorAcao.verContato}" onstart="loadingModal();"
+						onsuccess="backModal();" onerror="backModal(); reload();">
+					</p:commandLink>
+
+					<p:commandLink action="#{professorAcao.acaoVerContato}"
+						process="@this" update="divExibirCamposContatoFormProfessor"
+						styleClass="ui-icon   ui-icon-triangle-1-n"
+						rendered="#{professorAcao.verContato}" onstart="loadingModal();"
+						onsuccess="backModal();" onerror="backModal(); reload();">
+					</p:commandLink>
+					<h:outputText value="Contato" />
+				</p:panelGrid>
+
+
+				<s:div rendered="#{professorAcao.verContato}">
+
+					<table width="#{width}">
+
+						<tr>
+							<td colspan="2">
+								<table width="100%">
+									<td width="50%"><s:div styleClass="div-bloco">
+											<table>
+												<tr>
+													<td><h:outputText value="Telefone" /><span
+														style="color: red;">*</span></td>
+												</tr>
+												<tr>
+													<td><p:inputMask
+															value="#{professorAcao.contato.telefone}"
+															mask="(99) 99999-9999" size="#{sizeInputPequeno}" /></td>
+												</tr>
+											</table>
+										</s:div></td>
+									<td width="50%"><s:div styleClass="div-bloco">
+											<table>
+												<tr>
+													<td><h:outputText value="Telefone Fixo" /></td>
+												</tr>
+												<tr>
+													<td><p:inputMask
+															value="#{professorAcao.contato.telefone2}"
+															mask="(99) 9999-9999" size="#{sizeInputPequeno}" /></td>
+												</tr>
+											</table>
+										</s:div></td>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="padding-top: 5px;"><s:div
+									styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="Email" /></td>
+										</tr>
+										<tr>
+											<td><p:inputText value="#{professorAcao.contato.email}"
+													size="#{sizeInputGrande}" /></td>
+										</tr>
+									</table>
+								</s:div></td>
+						</tr>
+					</table>
+				</s:div>
+				<s:div rendered="#{professorAcao.alterarProfessor}">
+					<table width="#{width}">
+						<tr>
+							<td colspan="2" style="padding-top: 5px;"><s:div
+									styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="Situação" /><span
+												style="color: red;">*</span></td>
+										</tr>
+										<tr>
+											<td><p:selectOneMenu
+													value="#{professorAcao.professor.situacao}"
+													requiredMessage="Situação é obrigatório!" required="true">
+													<f:selectItems value="#{situacao}" var="s"
+														itemLabel="#{s.descricao}" itemValue="#{s}" />
+												</p:selectOneMenu></td>
+										</tr>
+									</table>
+								</s:div></td>
+						</tr>
+					</table>
+				</s:div>
+
+				<s:div id="divExibirCamposEnderecoFormProfessor" rendered="false">
+					<p:panelGrid columns="2">
+						<p:commandLink action="#{professorAcao.acaoVerEndereco}"
+							process="@this" update="divExibirCamposEnderecoFormProfessor"
+							styleClass="ui-icon  ui-icon-triangle-1-s"
+							rendered="#{!professorAcao.verEndereco}" onstart="loadingModal();"
+							onsuccess="backModal();" onerror="backModal(); reload();">
+						</p:commandLink>
+
+						<p:commandLink action="#{professorAcao.acaoVerEndereco}"
+							process="@this" update="divExibirCamposEnderecoFormProfessor"
+							styleClass="ui-icon   ui-icon-triangle-1-n"
+							rendered="#{professorAcao.verEndereco}" onstart="loadingModal();"
+							onsuccess="backModal();" onerror="backModal(); reload();">
+						</p:commandLink>
+						<h:outputText value="Endereço" />
+					</p:panelGrid>
+
+					<s:div rendered="#{professorAcao.verEndereco}">
+
+					</s:div>
+				</s:div>
+			</s:div>
+		</s:div>
+
+		<s:div rendered="#{lancamentoAcao.novoProfessor}">
+			<p:spacer height="10" />
+			<table width="#{width}">
+				<tr>
+					<td width="100%" align="right"><p:commandButton
+							action="#{professorAcao.salvarLancamento}" value="Salvar"
+							update="divTotalProfessor, :formPrincipal:idProfessor, :formPrincipal:divAdd"
+							process="@form" onstart="loadingModal();"
+							onsuccess="backModal();" onerror="backModal(); reload();" /> <p:commandButton
+							action="#{professorAcao.cancelarLancamento}" immediate="true"
+							value="Cancelar" update=":formPrincipal:divAdd" process="@form"
+							onstart="loadingModal();" onsuccess="backModal();"
+							onerror="backModal(); reload();" /></td>
+				</tr>
+			</table>
+		</s:div>
+
+		<s:div rendered="#{!lancamentoAcao.novoProfessor}">
+			<p:spacer height="10" />
+			<table width="#{width}">
+				<tr>
+					<td width="100%" align="right"><p:commandButton
+							id="btnIncluirProfessorCrud"
+							action="#{professorAcao.salvarFormulario}" value="Salvar"
+							update="divTotalProfessor" process="@form"
+							rendered="#{!professorAcao.alterarProfessor}"
+							onstart="loadingModal();" onsuccess="backModal();"
+							onerror="backModal(); reload();" icon="ui-icon-disk" /> <p:commandButton
+							id="btnAlterarProfessorCrud" action="#{professorAcao.alterar}"
+							value="Salvar" update="divTotalProfessor"
+							rendered="#{professorAcao.alterarProfessor}" process="@form"
+							onstart="loadingModal();" onsuccess="backModal();"
+							onerror="backModal(); reload();" icon="ui-icon-disk" /> <p:commandButton
+							id="btnExcluirProfessorCrud" action="#{professorAcao.excluir}"
+							value="Excluir" update="divTotalProfessor"
+							rendered="#{professorAcao.alterarProfessor}" process="@form"
+							onstart="loadingModal();" onsuccess="backModal();"
+							onerror="backModal(); reload();" icon="ui-icon-close" /> <p:commandButton
+							action="#{professorAcao.cancelarFormulario}" immediate="true"
+							value="Cancelar" icon="ui-icon-cancel" update="divTotalProfessor"
+							process="@form" onstart="loadingModal();"
+							onsuccess="backModal();" onerror="backModal(); reload();" /></td>
+				</tr>
+			</table>
+
+		</s:div>
+	</h:form>
+</ui:component>

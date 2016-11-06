@@ -1,0 +1,64 @@
+<ui:component xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:totem="http://www.totemti.com.br/componentes"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<s:div rendered="#{rendered eq null ? true : rendered}">
+		<h:panelGrid columns="2" styleClass="table table-hover"
+			columnClasses="tdtexto,tdcampo">
+			<h:outputLabel value="#{messages['geral.data.criacao']}"
+				rendered="#{not empty bean.idContrato}" />
+			<h:outputText value="#{bean.dataCriacao}"
+				rendered="#{not empty bean.idContrato}" />
+
+			<h:outputLabel value="#{messages['geral.usuario.criacao']}"
+				rendered="#{not empty bean.idContrato}" />
+			<h:outputText value="#{bean.usuarioCriacao.nomeOuEmail}"
+				rendered="#{not empty bean.idContrato}" />
+
+			<h:outputLabel value="#{messages['geral.data.inicio']}" />
+			<p:calendar value="#{bean.dataInicio}" locale="pt"
+				rendered="#{edicao}" mask="true" size="8"
+				requiredMessage="#{messages['campo.obrigatorio.data.inicio']}"
+				required="true" pattern="dd/MM/yyyy">
+			</p:calendar>
+			<h:outputText value="#{bean.dataInicio}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['geral.data.fim']}" />
+			<p:calendar value="#{bean.dataFim}" locale="pt" rendered="#{edicao}"
+				pattern="dd/MM/yyyy" mask="true" size="8" >
+			</p:calendar>
+			<h:outputText value="#{bean.dataFim}" rendered="#{not edicao}" />
+
+			<h:outputLabel value="#{messages['contrato.situacao']}"
+				rendered="#{not empty bean.idContrato}" />
+			<h:selectOneMenu value="#{bean.situacaoContrato}"
+				styleClass="btn btn-default btn-sm dropdown-toggle txt-left"
+				rendered="#{not empty bean.idContrato and edicao}"
+				style="width: 150px;" update="@all">
+				<s:selectItems value="#{situacaoContrato}" var="_situacao"
+					label="#{_situacao}" />
+				<p:ajax event="click" update="input" listener="#{clienteAction.limparJust()}"/>
+			</h:selectOneMenu>
+			<h:outputText value="#{bean.situacaoContrato}"
+				rendered="#{not edicao}" />
+
+			<h:outputLabel
+				value="#{messages['contrato.justificativa.fim.contrato']}" />
+			<p:inputTextarea value="#{bean.justFimContrato}"
+				styleClass="form-control"
+				disabled="#{bean.situacaoContrato ne 'CANCELADO'}" id="input"
+				rendered="#{edicao}" maxlength="255" required="true"
+				requiredMessage="#{messages['campo.obrigatorio.justFimContrato']}" />
+
+			<p:inputTextarea value="#{bean.justFimContrato}" disabled="true"
+				styleClass="form-control" rendered="#{not edicao}" />
+		</h:panelGrid>
+	</s:div>
+</ui:component>

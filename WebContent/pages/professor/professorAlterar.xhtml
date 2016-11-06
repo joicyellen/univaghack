@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:erp="http://java.sun.com/jsf/composite/erp"
+	xmlns:totem="http://www.totemti.com.br/componentes"
+	template="/layout/template-default.xhtml">
+
+	<ui:define name="body">
+
+		<b:container>
+		
+			<ui:include src="/pages/cliente/includeFormularioCliente.xhtml">
+				<ui:param name="subtitle" value="Alterar" />
+				<ui:param name="width" value="400" />
+				<ui:param name="sizeInputGrande" value="60" />
+				<ui:param name="sizeInputPequeno" value="26" />
+				<ui:param name="tituloH3" value="true" /> 
+			</ui:include>
+
+		</b:container>
+
+	</ui:define>
+
+</ui:composition>

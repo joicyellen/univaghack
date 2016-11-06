@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:s="http://jboss.org/schema/seam/taglib">
+
+<ui:composition>
+	<div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 1000;" role="navigation">
+		<div class="container-fluid">
+			<h:form>
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<h:commandLink value="SIGA Ponto" action="home" styleClass="navbar-brand"/>
+				</div>
+				
+				
+				
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><h:commandLink value="Professores" action="professor.manter" /></li>
+						<li><h:commandLink value="Pontos" action="ponto.aprovarBatida" /></li>
+						<li><h:commandLink value="Relatórios" action="relatorio.relatorioFrequencia" /></li>
+						
+						<li><s:link id="menuLogoutId" view="/login.xhtml" action="#{identity.logout()}" value="Logout"
+								rendered="#{identity.loggedIn}" propagation="none" /></li>
+
+					</ul>
+				</div>
+			</h:form>
+		</div>
+	</div>
+</ui:composition>
+</html>
