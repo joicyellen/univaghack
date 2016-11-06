@@ -13,9 +13,6 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
-import lombok.Data;
-
-@Data
 @Entity
 @Name("endereco")
 @Table(name = "ENDERECO")
@@ -41,41 +38,44 @@ public class Endereco implements Serializable {
 	@Column(name = "NUMERO")
 	private String numero;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Endereco other = (Endereco) obj;
-		if (bairro == null) {
-			if (other.getBairro() != null)
-				return false;
-		} else if (!bairro.equals(other.getBairro()))
-			return false;
-		if (complemento == null) {
-			if (other.getComplemento() != null)
-				return false;
-		} else if (!complemento.equals(other.getComplemento()))
-			return false;
-		if (descricao == null) {
-			if (other.getDescricao() != null)
-				return false;
-		} else if (!descricao.equals(other.getDescricao()))
-			return false;
-		if (idEndereco == null) {
-			if (other.getIdEndereco() != null)
-				return false;
-		} else if (!idEndereco.equals(other.getIdEndereco()))
-			return false;
-		if (numero == null) {
-			if (other.getNumero() != null)
-				return false;
-		} else if (!numero.equals(other.getNumero()))
-			return false;
-		return true;
+	public Long getIdEndereco() {
+		return idEndereco;
+	}
+
+	public void setIdEndereco(Long idEndereco) {
+		this.idEndereco = idEndereco;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	@Override
@@ -90,5 +90,41 @@ public class Endereco implements Serializable {
 		return result;
 	}
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Endereco other = (Endereco) obj;
+		if (bairro == null) {
+			if (other.bairro != null)
+				return false;
+		} else if (!bairro.equals(other.bairro))
+			return false;
+		if (complemento == null) {
+			if (other.complemento != null)
+				return false;
+		} else if (!complemento.equals(other.complemento))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (idEndereco == null) {
+			if (other.idEndereco != null)
+				return false;
+		} else if (!idEndereco.equals(other.idEndereco))
+			return false;
+		if (numero == null) {
+			if (other.numero != null)
+				return false;
+		} else if (!numero.equals(other.numero))
+			return false;
+		return true;
+	}
+
 }

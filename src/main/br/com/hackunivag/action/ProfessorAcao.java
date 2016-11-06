@@ -13,6 +13,7 @@ import org.jboss.seam.annotations.Scope;
 
 import br.com.hackunivag.entidade.Professor;
 import br.com.hackunivag.negocio.ProfessorNegocio;
+import br.com.hackunivag.view.ProfessorLazyDataModel;
 
 @Name("professorAcao")
 @Scope(ScopeType.CONVERSATION)
@@ -29,21 +30,23 @@ public class ProfessorAcao extends BaseAcao {
 	@In(required = false)
 	private ProfessorNegocio professorNegocio;
 
-//	@In(create = true, required = false)
-//	@Out(required = false)
 	private Professor professorPesquisa;
 
 	private List<Professor> listaProfessor;
+
+	private ProfessorLazyDataModel professorLazyDataModel;
 
 	@Create
 	public void init() {
 		professorPesquisa = new Professor();
 		professor = new Professor();
+		professorLazyDataModel = new ProfessorLazyDataModel(professor, professorNegocio);
 
 	}
 
 	public void limpar() {
 		professorPesquisa = new Professor();
+		professor = new Professor();
 		// listar();
 	}
 
@@ -64,9 +67,13 @@ public class ProfessorAcao extends BaseAcao {
 		limpar();
 		return PROFESSOR_MANTER;
 	}
-	
-	public void listaProfessor() {
 
+	public void listar() {
+		listarProfessor();
+	}
+
+	public void listarProfessor() {
+		professorLazyDataModel = new ProfessorLazyDataModel(professorPesquisa, professorNegocio);
 	}
 
 }

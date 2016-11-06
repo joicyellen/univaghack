@@ -16,14 +16,12 @@
 		</navigation>
 		<navigation>
 
-			<!-- EXEMPLO -->
 			<rule if-outcome="professor.manter">
-<!-- 				<end-conversation before-redirect="true" root="true" /> -->
 				<redirect view-id="/pages/professor/professorManter.xhtml" />
 			</rule>
 			
 			<rule if-outcome="professor.cadastrar">
-				<end-conversation before-redirect="true" root="true" />
+				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/professor/professorCadastrar.xhtml" />
 			</rule>
 			
@@ -32,32 +30,32 @@
 			</rule>
 
 			<rule if-outcome="ponto.registrarBatida">
-				<end-conversation before-redirect="true" root="true" />
+				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/ponto/registrarBatida.xhtml" />
 			</rule>
 
 			<rule if-outcome="ponto.aprovarBatida">
-				<end-conversation before-redirect="true" root="true" />
+				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/ponto/aprovarBatida.xhtml" />
 			</rule>
 
 			<rule if-outcome="ponto.justificarFalta">
-				<end-conversation before-redirect="true" root="true" />
+				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/ponto/justificarFalta.xhtml" />
 			</rule>
 
 			<rule if-outcome="relatorio.relatorioFrequencia">
-				<end-conversation before-redirect="true" root="true" />
+				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/relatorio/relatorioFrequencia.xhtml" />
 			</rule>
 
 			<rule if-outcome="relatorio.relatorioAciduidade">
-				<end-conversation before-redirect="true" root="true" />
+				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/relatorio/relatorioAciduidade.xhtml" />
 			</rule>
 
 			<rule if-outcome="home">
-				<end-conversation before-redirect="true" root="true" />
+				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/home.xhtml" />
 			</rule>
 		</navigation>

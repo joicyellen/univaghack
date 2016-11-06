@@ -1,10 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:s="http://jboss.org/schema/seam/taglib"
-	xmlns:erp="http://java.sun.com/jsf/composite/erp" template="/layout/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:erp="http://java.sun.com/jsf/composite/erp"
+	template="/layout/template.xhtml">
 	<ui:define name="body">
 
 		<b:container>
@@ -17,45 +22,51 @@
 
 			<h:form id="idFormProfessor">
 
-				<s:div styleClass="navbar navbar-default " style="position: inherit;">
+				<s:div styleClass="navbar navbar-default "
+					style="position: inherit;">
 					<div style="margin-top: 5px; position: relative;">
 						<div style="float: right; position: relative;">
-	
+
 							<p:panelGrid style="border: none;">
-								<p:commandButton action="#" value="Salvar" icon="ui-icon-disk" process="@parent"
-									styleClass="ui-priority-primary"
-									update="idListaProfessor" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" />
-								<p:commandButton action="#" value="Cancelar" icon="ui-icon-cancel" process="@parent"
-									styleClass="ui-priority-primary"
-									update="idListaProfessor" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" />	
+								<p:commandButton action="#" value="Salvar" icon="ui-icon-disk"
+									process="@parent" styleClass="ui-priority-primary"
+									update="idListaProfessor" onstart="loadingModal();"
+									onsuccess="backModal();" onerror="backModal();" />
+								<p:commandButton action="#" value="Cancelar"
+									icon="ui-icon-cancel" process="@parent"
+									styleClass="ui-priority-primary" update="idListaProfessor"
+									onstart="loadingModal();" onsuccess="backModal();"
+									onerror="backModal();" />
 							</p:panelGrid>
-	
+
 						</div>
-	
+
 						<div style="float: left; position: relative;">
 							<h:form>
 								<div class="form-group">
 									<p:inputText placeholder="Pesquisar" size="30">
-										<p:ajax event="keyup" update=":idFormProfessor:idListaProfessor" />
+										<p:ajax event="keyup"
+											update=":idFormProfessor:idListaProfessor" />
 									</p:inputText>
 								</div>
 							</h:form>
-	
-	
+
+
 						</div>
 					</div>
 				</s:div>
 
 
-				<p:dataTable id="idListaProfessor" var="professor" value="#{professorAcao.listaProfessor}"
+				<p:dataTable id="idListaProfessor" var="professor"
+					value="#{professorAcao.listar()}"
 					emptyMessage="Nenhum registro encontrado.">
 
 					<p:column headerText="Matricula" style="background-color: inherit;">
-						<h:outputText value="#{professor.pessoa.nomeCompleto}" />
+						<h:outputText value="#{professor.matricula}" />
 					</p:column>
-					
+
 					<p:column headerText="Nome" style="background-color: inherit;">
-						<h:outputText value="#" />
+						<h:outputText value="#{professor.pessoa.nomeCompleto}" />
 					</p:column>
 
 					<p:column headerText="CPF" style="background-color: inherit;">
@@ -65,9 +76,9 @@
 					<p:column headerText="Horário" style="background-color: inherit;">
 						<h:outputText value="#" />
 					</p:column>
-					
+
 					<p:column headerText="Status" style="background-color: inherit;">
-						<h:outputText value="" />
+						<h:outputText value="#" />
 					</p:column>
 
 				</p:dataTable>

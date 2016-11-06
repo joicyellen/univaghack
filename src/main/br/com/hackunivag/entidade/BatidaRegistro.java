@@ -13,15 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
 import br.com.hackunivag.util.Enumerados.SimNao;
 
-@Data
 @Entity
 @Table(name = "BATIDAREGISTRO")
 @Name("batidaRegistro")
@@ -48,47 +45,56 @@ public class BatidaRegistro implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ID_ESCOLA")
 	private Escola escola;
-	
+
 	@Basic
 	private SimNao aprovado;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BatidaRegistro other = (BatidaRegistro) obj;
-		if (aprovado != other.getAprovado())
-			return false;
-		if (escola == null) {
-			if (other.getEscola() != null)
-				return false;
-		} else if (!escola.equals(other.getEscola()))
-			return false;
-		if (idBatidaRegistro == null) {
-			if (other.getIdBatidaRegistro() != null)
-				return false;
-		} else if (!idBatidaRegistro.equals(other.getIdBatidaRegistro()))
-			return false;
-		if (motivo == null) {
-			if (other.getMotivo() != null)
-				return false;
-		} else if (!motivo.equals(other.getMotivo()))
-			return false;
-		if (ponto == null) {
-			if (other.getPonto() != null)
-				return false;
-		} else if (!ponto.equals(other.getPonto()))
-			return false;
-		if (usuario == null) {
-			if (other.getUsuario() != null)
-				return false;
-		} else if (!usuario.equals(other.getUsuario()))
-			return false;
-		return true;
+	public Long getIdBatidaRegistro() {
+		return idBatidaRegistro;
+	}
+
+	public void setIdBatidaRegistro(Long idBatidaRegistro) {
+		this.idBatidaRegistro = idBatidaRegistro;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Date getPonto() {
+		return ponto;
+	}
+
+	public void setPonto(Date ponto) {
+		this.ponto = ponto;
+	}
+
+	public String getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
+	}
+
+	public Escola getEscola() {
+		return escola;
+	}
+
+	public void setEscola(Escola escola) {
+		this.escola = escola;
+	}
+
+	public SimNao getAprovado() {
+		return aprovado;
+	}
+
+	public void setAprovado(SimNao aprovado) {
+		this.aprovado = aprovado;
 	}
 
 	@Override
@@ -102,6 +108,45 @@ public class BatidaRegistro implements Serializable {
 		result = prime * result + ((ponto == null) ? 0 : ponto.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
-	} 
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BatidaRegistro other = (BatidaRegistro) obj;
+		if (aprovado != other.aprovado)
+			return false;
+		if (escola == null) {
+			if (other.escola != null)
+				return false;
+		} else if (!escola.equals(other.escola))
+			return false;
+		if (idBatidaRegistro == null) {
+			if (other.idBatidaRegistro != null)
+				return false;
+		} else if (!idBatidaRegistro.equals(other.idBatidaRegistro))
+			return false;
+		if (motivo == null) {
+			if (other.motivo != null)
+				return false;
+		} else if (!motivo.equals(other.motivo))
+			return false;
+		if (ponto == null) {
+			if (other.ponto != null)
+				return false;
+		} else if (!ponto.equals(other.ponto))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
+		return true;
+	}
 
 }

@@ -1,89 +1,64 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j" xmlns:b="http://bootsfaces.net/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:s="http://jboss.org/schema/seam/taglib"
-	xmlns:erp="http://java.sun.com/jsf/composite/erp"
-	template="/layout/template.xhtml">
-	<ui:define name="body">
+	template="/layout/template.xhtml" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui">
 
-		<b:container>
+	<ui:define name="body">
+		<h:form>
 			<legend>
-				<h3>
-					<h:outputText value="Professor" />
-					<small> <h:outputText value="Consultar" /></small>
-				</h3>
+				<big> <h:outputText value="Professores" /></big>
 			</legend>
 
-			<h:form id="idFormProfessor">
+			<div class="box box-warning">
+				<div class="box-header with-border">
 
-				<s:div styleClass="navbar navbar-default "
-					style="position: inherit;">
-					<div style="margin-top: 5px; position: relative;">
-						<div style="float: right; position: relative;">
+					<p:panel id="filtros">
+						<f:facet name="header">Pesquisar</f:facet>
 
-							<p:panelGrid style="border: none;">
-								<p:commandButton action="#{professorAcao.exibirIncluir}"
-									value="Incluir" icon="ui-icon-plus" process="@parent"
-									styleClass="ui-priority-primary" update="idListaProfessor"
-									onstart="loadingModal();" onsuccess="backModal();"
-									onerror="backModal();" />
-							</p:panelGrid>
+						<h:panelGrid columns="2" styleClass="table table-hover">
+							<h:outputLabel value="Descrição" />
+							<h:inputText value="#{dadospessoal.nomeCompleto}"
+								styleClass="form-control" />
+							<h:outputLabel value="Matricula" />
+							<h:inputText value="#{professor.matricula}"
+								styleClass="form-control" />
+						</h:panelGrid>
 
+						<p:spacer height="10" />
+
+						<div class="panel-footer">
+							<s:div>
+								<td><h:commandButton action="#{professorAcao.listar()}"
+										styleClass="btn btn-primary" value="Pesquisar"
+										icon="ui-icon-search" process="@form" update="divLista"
+										onstart="loadingModal();" onsuccess="backModal();"
+										onerror="backModal();" /></td>
+								<td><h:commandButton
+										action="#{professorAcao.limpar()}"
+										value="Limpar Filtros" icon="ui-icon-refresh"
+										process="@parent" update="filtros, divLista"
+										onstart="loadingModal();" styleClass="btn btn-primary"
+										onsuccess="backModal();" onerror="backModal();" /></td>
+								<td><h:commandButton
+										action="#{professorAcao.exibirIncluir()}"
+										value="Incluir Professor" process="@parent"
+										styleClass="btn btn-primary" onstart="loadingModal();"
+										onsuccess="backModal();" onerror="backModal();" /></td>
+							</s:div>
 						</div>
+					</p:panel>
+				</div>
+			</div>
+			<s:div id="divLista">
+				<ui:include src="includeListaProfessor.xhtml" />
+			</s:div>
 
-						<div style="float: left; position: relative;">
-							<h:form>
-								<div class="form-group">
-									<p:inputText placeholder="Pesquisar" size="30"
-										value="#{professor.pessoa.nomeCompleto}">
-										<p:ajax event="keyup"
-											update=":idFormProfessor:idListaProfessor" />
-									</p:inputText>
-								</div>
-							</h:form>
-							<p:commandButton action="#{professorAcao.listar()}"
-								value="Listar" process="@form" styleClass="ui-priority-primary"
-								update="idListaProfessor" onstart="loadingModal();"
-								onsuccess="backModal();" onerror="backModal();" />
-						</div>
-					</div>
-				</s:div>
-
-
-				<p:dataTable id="idListaProfessor" var="professor"
-					value="#{professorAcao.listar()}"
-					emptyMessage="Nenhum registro encontrado.">
-
-					<p:column headerText="Nome" style="background-color: inherit;">
-						<h:outputText value="#{pessoa.nomeCompleto}" />
-					</p:column>
-
-					<p:column headerText="CPF" style="background-color: inherit;">
-						<h:outputText value="#{pessoa.cpf}" />
-					</p:column>
-
-					<p:column headerText="Email" style="background-color: inherit;">
-						<h:outputText value="#{professor.pessoa.email}" />
-					</p:column>
-
-					<p:column headerText=" " width="6%"
-						style="background-color: inherit;">
-						<p:commandLink action="#{professorAcao.exibirAlterar(professor)}"
-							update="@form" process="@this">
-							<h:outputText value="Exibir" />
-						</p:commandLink>
-					</p:column>
-
-				</p:dataTable>
-
-			</h:form>
-
-		</b:container>
+		</h:form>
 	</ui:define>
 </ui:composition>

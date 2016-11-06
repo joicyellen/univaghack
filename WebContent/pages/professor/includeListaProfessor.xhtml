@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	
+	<p:spacer width="10" height="20" />
+	
+	
+	<p:dataTable id="tabelaProfessor" var="professor" style="background-color: white;"
+			value="#{professorAction.professorLazyDataModel}" paginator="true" 
+			rows="10" lazy="true" paginatorPosition="bottom"
+			rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIx" emptyMessage="Nenhum registro encontrado.">
+		
+		<p:column headerText="Id" sortBy="Id" width="10%"
+			style="background-color: inherit;">
+			<h:outputText value="#{professor.idProfessor}" />
+		</p:column>
+		
+		<p:column headerText="Nome" sortBy="#{professor.pessoa.nomeCompleto}"
+			width="40%" style="background-color: inherit;">
+			<h:outputText value="#{professor.pessoa.nomeCompleto}" />
+		</p:column>
+		
+		<p:column headerText="Matricula" sortBy="#{professor.matricula}" width="20%"
+			style="background-color: inherit;">
+			<h:outputText value="#{professor.matricula}" />
+		</p:column>
+		
+		<p:column headerText="Valor" sortBy="#{professor.cargaHoraria}" width="15%"
+			style="background-color: inherit;">
+			<h:outputText value="#{professor.cargaHoraria}" />
+		</p:column>
+
+		<p:column headerText=" " style= "text-align: center;">
+			<h:commandButton value="Alterar" ajax="false" process="@this"
+				action="#{professorAction.exibirAlterar(professor)}"
+				styleClass="btn btn-warning" immediate="true">
+				<s:conversationId />
+				<f:setPropertyActionListener
+					target="#{professorAction.professorSelecionado}" value="#{professor}" />
+			</h:commandButton>
+		</p:column>
+
+	</p:dataTable>
+
+</ui:composition>
+</html>

@@ -7,6 +7,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.primefaces.model.SortOrder;
 
 import br.com.hackunivag.entidade.Professor;
 import br.com.hackunivag.util.Validador;
@@ -17,8 +18,8 @@ import br.com.hackunivag.util.Validador;
 public class ProfessorDAO extends BaseDAO<Professor> {
 	
 	@SuppressWarnings("unchecked")
-	public List<Professor> listarProfessor(Professor professor) {
-		
+	
+	public List<Professor> listarPorPagina(int primeiro, int tamanhoPagina, String sortField, SortOrder sortOrder, Professor professor) {
 		StringBuilder sbQuery = new StringBuilder();
 		sbQuery.append(" SELECT DISTINCT u FROM Professor u ");
 		sbQuery.append(" INNER JOIN u.pessoa p");
@@ -46,4 +47,16 @@ public class ProfessorDAO extends BaseDAO<Professor> {
 		return query.list();
 	}
 
+public Long contador(Professor professor) {
+		
+		StringBuilder hql = new StringBuilder();
+		
+		hql.append(" select COUNT(c) from Categoria c WHERE 1=1 ");
+		hql.append(" AND c.dominioAtivoInativo = :situacao ");
+
+		Query query = (Query) getSession().createQuery(hql.toString());
+		query.setParameter("situacao", br.com.hackunivag.util.Dominios.DOMINIO_ATIVO_INATIVO.ATIVO);
+		
+		return (Long) query.uniqueResult();
+	}	
 }
