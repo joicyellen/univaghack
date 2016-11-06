@@ -21,28 +21,9 @@ public class ProfessorDAO extends BaseDAO<Professor> {
 	
 	public List<Professor> listarPorPagina(int primeiro, int tamanhoPagina, String sortField, SortOrder sortOrder, Professor professor) {
 		StringBuilder sbQuery = new StringBuilder();
-		sbQuery.append(" SELECT DISTINCT u FROM Professor u ");
-		sbQuery.append(" INNER JOIN u.pessoa p");
-		sbQuery.append(" WHERE u.escola = :escola ");
-		
-		if (professor != null && professor.getPessoa() != null && Validador.isStringValida(professor.getPessoa().getNomeCompleto())) {
-			sbQuery.append(" AND lower(p.nome) LIKE lower( :nome ) ");
-		}
-		if (professor != null && professor.getPessoa() != null && Validador.isStringValida(professor.getPessoa().getCpf())) {
-			sbQuery.append(" AND lower(p.cpf) LIKE lower( :cpf ) ");
-		}
+		sbQuery.append(" SELECT u FROM Professor u ");
 		
 		Query query = (Query) getSession().createQuery(sbQuery.toString());
-		if (professor != null && professor.getPessoa() != null && Validador.isStringValida(professor.getPessoa().getNomeCompleto())) {
-			query.setParameter("nome", "%" + professor.getPessoa().getNomeCompleto() + "%");
-		}
-		if (professor != null && professor.getPessoa() != null && Validador.isStringValida(professor.getPessoa().getCpf())) {
-			query.setParameter("login", "%" + professor.getPessoa().getCpf() + "%");
-		}
-		
-		if (professor.getEscola() != null) {
-			query.setParameter("escola", professor.getEscola());
-		}
 
 		return query.list();
 	}

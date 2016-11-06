@@ -58,7 +58,7 @@ public class ProfessorLazyDataModel extends LazyDataModel<Professor> {
 	public List<Professor> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
 
-		super.setRowCount(professorNegocio.contador(professor).intValue());
+		setRowCount(professorNegocio.contador(professor).intValue());
 
 		return professorNegocio.listarPorPagina(first, pageSize, sortField,
 				sortOrder, professor);

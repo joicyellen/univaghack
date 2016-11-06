@@ -22,9 +22,10 @@
 						<f:facet name="header">Pesquisar</f:facet>
 
 						<h:panelGrid columns="2" styleClass="table table-hover">
-							<h:outputLabel value="Descrição" />
-							<h:inputText value="#{dadospessoal.nomeCompleto}"
-								styleClass="form-control" />
+							<h:outputLabel value="Nome" />
+							<p:inputText value="#{professorAcao.professorPesquisa.matricula}"
+								styleClass="form-control" >
+								</p:inputText>
 							<h:outputLabel value="Matricula" />
 							<h:inputText value="#{professor.matricula}"
 								styleClass="form-control" />

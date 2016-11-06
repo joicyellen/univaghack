@@ -17,14 +17,63 @@
 	<ui:define name="body">
 
 		<b:container>
-		
-<!-- 			<ui:include src="/pages/professor/includeFormularioCliente.xhtml"> -->
-				<ui:param name="subtitle" value="Incluir" />
-				<ui:param name="width" value="400" />
-				<ui:param name="sizeInputGrande" value="60" />
-				<ui:param name="sizeInputPequeno" value="26" />
-				<ui:param name="tituloH3" value="true" /> 
-<!-- 			</ui:include> -->
+			<legend>
+				<h3>
+					<h:outputText value="Professor" />
+					<small> <h:outputText value="Cadastrar" /></small>
+				</h3>
+			</legend>
+			<p:spacer height="20" />
+			<h:form id="formCodigoBandeiraAlterar">
+				<s:div id="divTotalBandeira">
+					<table width="400">
+						<tr>
+							<td><s:div styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="Nome " /> <span style="color: red;">*</span></td>
+										</tr>
+										<tr>
+											<td><p:inputText value="" required="true" 
+												size="50" requiredMessage="Matricula é obrigatório!" maxlength="250">
+												<p:ajax event="blur" update="@this" process="@this" />
+											</p:inputText>
+											</td>
+										</tr>
+									</table>
+								</s:div></td>
+							<td><s:div styleClass="div-bloco">
+									<table>
+										<tr>
+											<td><h:outputText value="Carga Horária " /> <span style="color: red;">*</span></td>
+										</tr>
+										<tr>
+											<td><p:inputText value="#{professorAcao.professor.cargaHoraria}" required="true" 
+												size="10" requiredMessage="Carga horária é obrigatório!" maxlength="3">
+												<p:ajax event="blur" update="@this" process="@this" />
+											</p:inputText>
+											</td>
+										</tr>
+									</table>
+								</s:div></td>
+
+						</tr>
+						
+					</table>
+				</s:div>
+				<s:div>
+					<p:spacer height="10"/>
+					<table width="450"> 
+						<tr>
+							<td width="100%" align="right" colspan="2"><p:commandButton id="btnIncluir"
+												action="#" icon="ui-icon-disk" value="Salvar" process="@form"
+												onstart="loadingModal();" onsuccess="backModal();" onerror="backModal(); reload();" /> <p:commandButton
+												action="#{professorAcao.cancelar()}" immediate="true" value="Cancelar" process="@form"
+												onstart="loadingModal();" onsuccess="backModal();" onerror="backModal(); reload();" icon="ui-icon-cancel" /></td>
+						</tr>
+					</table>
+				</s:div>
+			</h:form>
 
 		</b:container>
 

@@ -28,11 +28,11 @@
 						<div style="float: right; position: relative;">
 
 							<p:panelGrid style="border: none;">
-								<p:commandButton action="#" value="Salvar" icon="ui-icon-disk"
+								<p:commandButton action="ponto.aprovarBatida" value="Salvar" icon="ui-icon-disk"
 									process="@parent" styleClass="ui-priority-primary"
 									update="idListaProfessor" onstart="loadingModal();"
 									onsuccess="backModal();" onerror="backModal();" />
-								<p:commandButton action="#" value="Cancelar"
+								<p:commandButton action="home" value="Cancelar"
 									icon="ui-icon-cancel" process="@parent"
 									styleClass="ui-priority-primary" update="idListaProfessor"
 									onstart="loadingModal();" onsuccess="backModal();"

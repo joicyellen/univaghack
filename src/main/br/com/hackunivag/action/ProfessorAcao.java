@@ -40,7 +40,7 @@ public class ProfessorAcao extends BaseAcao {
 	public void init() {
 		professorPesquisa = new Professor();
 		professor = new Professor();
-		professorLazyDataModel = new ProfessorLazyDataModel(professor, professorNegocio);
+		professorLazyDataModel = new ProfessorLazyDataModel(professorPesquisa, professorNegocio);
 
 	}
 
@@ -75,5 +75,39 @@ public class ProfessorAcao extends BaseAcao {
 	public void listarProfessor() {
 		professorLazyDataModel = new ProfessorLazyDataModel(professorPesquisa, professorNegocio);
 	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	public Professor getProfessorPesquisa() {
+		return professorPesquisa;
+	}
+
+	public void setProfessorPesquisa(Professor professorPesquisa) {
+		this.professorPesquisa = professorPesquisa;
+	}
+
+	public List<Professor> getListaProfessor() {
+		return listaProfessor;
+	}
+
+	public void setListaProfessor(List<Professor> listaProfessor) {
+		this.listaProfessor = listaProfessor;
+	}
+
+	public ProfessorLazyDataModel getProfessorLazyDataModel() {
+		return professorLazyDataModel;
+	}
+
+	public void setProfessorLazyDataModel(ProfessorLazyDataModel professorLazyDataModel) {
+		this.professorLazyDataModel = professorLazyDataModel;
+	}
+	
+	
 
 }
